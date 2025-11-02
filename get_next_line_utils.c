@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/02 19:10:59 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:23:54 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,39 @@ char	*ft_strndup(const char *s, size_t len)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*p;
+
+	while (*s && *s != (unsigned char)c)
+		s++;
+	if (*s == (unsigned char)c)
+	{
+		p = (char *)s;
+		return (p);
+	}
+	return (NULL);
+}
+char	*ft_strncat(char *dest, const char *src, size_t len)
+{
+	size_t	i;
+	size_t	j;
+
+	if (!dest || !src)
+		return (NULL);
+	i = 0;
+	while (dest[i])
+		i++;
+	j = 0;
+	while (src[j] && j < len)
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
 }
 
 void	*ft_memset(void *s, int c, size_t n)
