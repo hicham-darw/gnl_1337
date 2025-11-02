@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 15:01:31 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/01 16:01:13 by hel-hamo         ###   ########.fr       */
+/*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
+/*   Updated: 2025/11/02 19:10:59 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,9 @@ char	*ft_strndup(const char *s, size_t len)
 
 	if (!s)
 		return (NULL);
-	i = 0;
-	while (s[i])
-		i++;
-	if (i < len)
-		ptr = (char *)malloc(sizeof(char) * (i + 1));
-	else
-		ptr = (char *)malloc(sizeof(char) * (len + 1));
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		return (NULL);
 	i = 0;
 	while (s[i] && i < len)
 	{
@@ -36,39 +32,17 @@ char	*ft_strndup(const char *s, size_t len)
 	return (ptr);
 }
 
-char	*get_line_update_storage(char **buffer, char **storage, int fd)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	int	bytes_read;
-	char	*line;
-	char	*is_nl;
-	char	*tmp;
+	unsigned char	*ptr;
+	size_t			i;
 
-	if (!buffer || !*buffer || !storage || !*storage)
-		return (NULL);
-	bytes_read = read(fd, *buffer, BUFF_SIZE);
-	if (bytes_read > 0)
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
 	{
-		*buffer[bytes_read] = '\0';
-		if (ft_strchr(*storage, '\n'))
-		{
-			is_nl = ft_strchr(*storage, '\n');
-			line = ft_strndup(*storage, (is_nl - (*storage) + 1));
-			tmp = ft_strndup((*storage) + (is_nl - (*storage)) + 1, ft_strlen((*storage) + (is_nl - (*storage)) + 1));
-			free(*storage);
-			*storage = (char *)malloc(sizeof(char) * (ft_strlen(tmp) + ft_strlen(*buffer) + 1));
-			if (!storage)
-			{
-				free(*buffer);
-				return (NULL);
-			}
-			ft_memset(*storage, 0, ft_strlen(tmp) + ft_strlen(*buffer) + 1);
-			ft_strncat(*storage, tmp, ft_strlen(tmp));
-			ft_strncat(*storage, *buffer, ft_strlen(*buffer));
-			return (line);
-		}
-
-		
+		ptr[i] = (unsigned char)c;
+		i++;
 	}
-	else if (bytes_read == 0)
-		return (NULL);
+	return (s);
 }
