@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/02 21:23:54 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/03 11:54:05 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,34 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
+char	*ft_get_line(char **storage, char (*buffer)[], int fd)
+{
+	char	*new_line;
+	int		bytes_read;
+
+	while (1)
+	{
+		new_line = ft_strchr(*storage, '\n');
+		if (new_line)
+			return (get_line_from_storage(storage, new_line));
+		bytes_read = ft_read_buffer(buffer, fd);
+		if (bytes_read < 0)
+		{
+			free(*storage);
+			return (NULL);
+		}
+		else if (bytes_read == 0)
+			return (last_line_in_storage(storage));
+		if (append_buffer_to_storage(storage, *buffer) == 1)
+			continue ;
+		else
+			return (NULL);
+		ft_memset(*buffer, 0, BUFFER_SIZE + 1);
+	}
+	return (NULL);
+}
+
 char	*ft_strncat(char *dest, const char *src, size_t len)
 {
 	size_t	i;
