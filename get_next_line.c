@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/03 11:53:02 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:31:54 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ char	*get_next_line(int fd)
 {
 	static char	*storage = NULL;
 	char		buffer[BUFFER_SIZE + 1];
-	char		*line;
 
 	if (fd < 0 || fd > 1024)
 		return (NULL);
