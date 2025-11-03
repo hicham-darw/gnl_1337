@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/02 21:35:32 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:39:40 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 	size_t	j;
 
 	i = 0;
-	while (*storage[i])
+	while ((*storage)[i])
 		i++;
 	tmp = ft_strndup(*storage, i);
 	free(*storage);
@@ -67,10 +67,33 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 		free(tmp);
 		return (-1);
 	}
+	ft_memset(*storage, 0, (i + j + 1));
 	ft_strncat(*storage, tmp, i);
 	free(tmp);
 	ft_strncat(*storage, buffer, j);
 	return (1);
+}
+
+char	*last_line_in_storage(char **storage)
+{
+	char	*line;
+	size_t	i;
+
+
+	if (!storage || !*storage)
+		return (NULL);
+	if (!**storage)
+	{
+		free(*storage);
+		return (NULL);
+	}
+	i = 0;
+	while ((*storage)[i])
+		i++;
+	line = ft_strndup(*storage, i);
+	free(*storage);
+	*storage = ft_strndup("", 0);
+	return (line);
 }
 
 char	*get_next_line(int fd)
@@ -79,25 +102,31 @@ char	*get_next_line(int fd)
 	char	buffer[BUFFER_SIZE + 1];
 	char	*line;
 	char	*nl;
+	int	ret_read;
 
 	if (fd < 0 || fd > 1024)
 		return (NULL);
 	if (!storage)
-		storage = ft_strndup("", 0);
+		storage = ft_strndup("", 1);
 	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	while (1)
 	{
 		nl = ft_strchr(storage, '\n');
 		if (nl)
 			return (get_line_from_storage(&storage, nl));
-		if (ft_read_buffer(&buffer, fd) <= 0)
+		ret_read = ft_read_buffer(&buffer, fd);
+		if (ret_read < 0)
 		{
 			free(storage);	
 			return (NULL);
 		}
+		else if (ret_read == 0)
+		{
+			return (last_line_in_storage(&storage));
+		}
 		if (append_buffer_to_storage(&storage, buffer) == 1)
 			continue;
-		else 
+		else
 			return (NULL);
 		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	}
@@ -107,18 +136,22 @@ char	*get_next_line(int fd)
 #include <stdio.h>
 #include <fcntl.h>
 
-int	main()
+int	main(int ac, char **av)
 {
-	int fd = open("tst.txt", O_RDONLY);
+	if (ac != 2)
+		return 42;
+
+	int fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 	{
 		perror("open");
 		return (42);
 	}
 	char	*line;
+	size_t i = 1;
 	while ((line = get_next_line(fd)))
 	{
-		printf("line: >|%s|<\n", line);
+		printf("line %zu: %s", i++, line); 
 		free(line);
 	}
 }
