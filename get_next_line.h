@@ -6,14 +6,17 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:09:26 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/03 11:53:47 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:53:36 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 50
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10000000
+# endif
+
 # include <stdlib.h>
 # include <unistd.h>
 
