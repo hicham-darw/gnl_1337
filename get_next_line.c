@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hel-hamo <hel-hamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 04:40:57 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:46:09 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ char	*get_line_from_storage(char **storage, char *buffer, char *nl)
 	while (new_s[i])
 		i++;
 	tmp = ft_strndup(new_s, i);
+	if (!tmp)
+	{
+		free(*storage);
+		return (NULL);
+	}
 	free(*storage);
 	*storage = tmp;
 	return (line);
@@ -46,6 +51,8 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 	while ((*storage)[i])
 		i++;
 	tmp = ft_strndup(*storage, i);
+	if (!tmp)
+		return (-1);
 	free(*storage);
 	j = 0;
 	while (buffer[j])
@@ -53,7 +60,6 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 	*storage = (char *)malloc(sizeof(char) * (i + j + 1));
 	if (!*storage)
 	{
-		free(buffer);
 		free(tmp);
 		return (-1);
 	}
@@ -71,9 +77,7 @@ char	*last_line_in_storage(char **storage, char *buffer)
 
 	free(buffer);
 	if (!storage || !(*storage))
-	{
 		return (NULL);
-	}
 	if (!(**storage))
 	{
 		free(*storage);
@@ -83,6 +87,11 @@ char	*last_line_in_storage(char **storage, char *buffer)
 	while ((*storage)[i])
 		i++;
 	line = ft_strndup(*storage, i);
+	if (!line)
+	{
+		free(*storage);
+		return (NULL);
+	}
 	free(*storage);
 	*storage = ft_strndup("", 0);
 	return (line);
@@ -95,21 +104,27 @@ int	ft_read_buffer(char **buffer, int fd)
 	if (!buffer || !*buffer)
 		return (-1);
 	bytes_read = read(fd, *buffer, BUFFER_SIZE);
+	if (bytes_read > 0)
+		(*buffer)[bytes_read] = '\0';
 	return (bytes_read);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*storage[MAX_FD] = {0};
+	static char	*storage = NULL;
 	char		*buffer;
 
 	if (fd < 0 || fd > 1024)
 		return (NULL);
-	if (!storage[fd])
+	if (!storage)
 		storage = ft_strndup("", 1);
+	if (!storage)
+		return (NULL);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
+	{
+		free(storage);
 		return (NULL);
-	ft_memset(buffer, 0, BUFFER_SIZE + 1);
-	return (ft_get_line(&storage[fd], &buffer, fd));
+	}
+	return (ft_get_line(&storage, &buffer, fd));
 }

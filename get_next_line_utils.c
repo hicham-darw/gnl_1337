@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hel-hamo <hel-hamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 03:07:19 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:41:42 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	char	*p;
 
+	if (!s)
+		return (NULL);
 	while (*s && *s != (unsigned char)c)
 		s++;
 	if (*s == (unsigned char)c)
@@ -67,9 +69,9 @@ char	*ft_get_line(char **storage, char **buffer, int fd)
 			return (last_line_in_storage(storage, *buffer));
 		if (append_buffer_to_storage(storage, *buffer) == 1)
 			continue ;
-		else
-			return (NULL);
-		ft_memset(*buffer, 0, BUFFER_SIZE + 1);
+		free(*storage);
+		free(*buffer);
+		return (NULL);
 	}
 	return (NULL);
 }
