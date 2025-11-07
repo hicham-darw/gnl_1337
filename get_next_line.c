@@ -6,21 +6,21 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/03 13:31:54 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 03:36:44 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
-#include <stdio.h>
 
-char	*get_line_from_storage(char **storage, char *nl)
+char	*get_line_from_storage(char **storage, char *buffer, char *nl)
 {
 	char	*line;
 	char	*tmp;
 	char	*new_s;
 	size_t	i;
 
+	free(buffer);
 	line = ft_strndup(*storage, (nl - (*storage)) + 1);
 	if (!line)
 	{
@@ -54,6 +54,7 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 	*storage = (char *)malloc(sizeof(char) * (i + j + 1));
 	if (!*storage)
 	{
+		free(buffer);
 		free(tmp);
 		return (-1);
 	}
@@ -64,13 +65,16 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 	return (1);
 }
 
-char	*last_line_in_storage(char **storage)
+char	*last_line_in_storage(char **storage, char *buffer)
 {
 	char	*line;
 	size_t	i;
 
+	free(buffer);
 	if (!storage || !(*storage))
+	{
 		return (NULL);
+	}
 	if (!(**storage))
 	{
 		free(*storage);
@@ -85,7 +89,7 @@ char	*last_line_in_storage(char **storage)
 	return (line);
 }
 
-int	ft_read_buffer(char (*buffer)[], int fd)
+int	ft_read_buffer(char **buffer, int fd)
 {
 	int	bytes_read;
 
@@ -98,12 +102,15 @@ int	ft_read_buffer(char (*buffer)[], int fd)
 char	*get_next_line(int fd)
 {
 	static char	*storage = NULL;
-	char		buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 
 	if (fd < 0 || fd > 1024)
 		return (NULL);
 	if (!storage)
 		storage = ft_strndup("", 1);
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
 	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	return (ft_get_line(&storage, &buffer, fd));
 }
