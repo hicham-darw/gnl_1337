@@ -6,12 +6,11 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 03:36:44 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 03:45:39 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
 
 char	*get_line_from_storage(char **storage, char *buffer, char *nl)
 {
