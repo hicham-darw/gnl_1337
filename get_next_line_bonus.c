@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 03:47:05 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 06:57:52 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*get_line_from_storage(char **storage, char *buffer, char *nl)
 	if (!line)
 	{
 		free(*storage);
+		*storage = NULL;
 		return (NULL);
 	}
 	new_s = ((*storage) + (nl - *storage) + 1);
@@ -77,6 +78,7 @@ char	*last_line_in_storage(char **storage, char *buffer)
 	if (!(**storage))
 	{
 		free(*storage);
+		*storage = NULL;
 		return (NULL);
 	}
 	i = 0;
@@ -84,7 +86,7 @@ char	*last_line_in_storage(char **storage, char *buffer)
 		i++;
 	line = ft_strndup(*storage, i);
 	free(*storage);
-	*storage = ft_strndup("", 0);
+	*storage = NULL;
 	return (line);
 }
 
@@ -100,16 +102,16 @@ int	ft_read_buffer(char **buffer, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage = NULL;
+	static char	*storage[MAX_FD] = {NULL};
 	char		*buffer;
 
-	if (fd < 0 || fd > 1024)
+	if (fd < 0 || fd >= 1024)
 		return (NULL);
-	if (!storage)
-		storage = ft_strndup("", 1);
+	if (!storage[fd])
+		storage[fd] = ft_strndup("", 1);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	ft_memset(buffer, 0, BUFFER_SIZE + 1);
-	return (ft_get_line(&storage, &buffer, fd));
+	return (ft_get_line(&storage[fd], &buffer, fd));
 }

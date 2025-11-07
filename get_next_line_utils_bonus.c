@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 03:48:53 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 06:56:41 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	*ft_get_line(char **storage, char **buffer, int fd)
 		{
 			free(*buffer);
 			free(*storage);
+			*storage = NULL;
 			return (NULL);
 		}
 		else if (bytes_read == 0)

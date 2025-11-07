@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:09:26 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 03:40:09 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/07 06:41:09 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2000
+#  define BUFFER_SIZE 50
 # endif
+
+# define MAX_FD 1024
 
 # include <stdlib.h>
 # include <unistd.h>
