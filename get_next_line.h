@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hel-hamo <hel-hamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:09:26 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/13 12:35:04 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:01:05 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	*ft_memalloc(size_t size);
 char	*ft_strncat(char *dest, const char *src, size_t len);
 char	*ft_get_line(char **storage, char **buffer, int fd);
 int		ft_read_buffer(char **buffer, int fd);
-char	*last_line_line_in_storage(char **storage);
 int		append_buffer_to_storage(char **storage, char *buffer, size_t br);
 char	*get_line_from_storage(char **storage, char *buffer, char *new_line);
 char	*last_line_in_storage(char **storage, char *buffer);
