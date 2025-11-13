@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 12:21:47 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:54:09 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*get_line_from_storage(char **storage, char *buffer, char *nl)
 	if (!tmp)
 	{
 		free(*storage);
-		free(buffer);
 		return (NULL);
 	}
 	free(*storage);
@@ -42,11 +41,10 @@ char	*get_line_from_storage(char **storage, char *buffer, char *nl)
 	return (line);
 }
 
-int	append_buffer_to_storage(char **storage, char *buffer)
+int	append_buffer_to_storage(char **storage, char *buffer, size_t bytes_read)
 {
 	char	*tmp;
 	size_t	i;
-	size_t	j;
 
 	i = 0;
 	while ((*storage)[i])
@@ -56,23 +54,19 @@ int	append_buffer_to_storage(char **storage, char *buffer)
 	{
 		free(buffer);
 		free(*storage);
-		return(-1);
+		return (-1);
 	}
 	free(*storage);
-	j = 0;
-	while (buffer[j])
-		j++;
-	*storage = (char *)malloc(sizeof(char) * (i + j + 1));
+	*storage = (char *)ft_memalloc(sizeof(char) * (i + bytes_read + 1));
 	if (!*storage)
 	{
 		free(buffer);
 		free(tmp);
 		return (-1);
 	}
-	ft_memset(*storage, 0, (i + j + 1));
 	ft_strncat(*storage, tmp, i);
 	free(tmp);
-	ft_strncat(*storage, buffer, j);
+	ft_strncat(*storage, buffer, bytes_read);
 	return (1);
 }
 
@@ -124,7 +118,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!storage[fd])
 		storage[fd] = ft_strndup("", 1);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = (char *)ft_memalloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 	{
 		free(storage[fd]);

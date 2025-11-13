@@ -6,7 +6,7 @@
 /*   By: hel-hamo <hel-hamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/07 12:41:42 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:46:12 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strndup(const char *s, size_t len)
 
 	if (!s)
 		return (NULL);
-	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	ptr = (char *)ft_memalloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -67,7 +67,7 @@ char	*ft_get_line(char **storage, char **buffer, int fd)
 		}
 		else if (bytes_read == 0)
 			return (last_line_in_storage(storage, *buffer));
-		if (append_buffer_to_storage(storage, *buffer) == 1)
+		if (append_buffer_to_storage(storage, *buffer, bytes_read) == 1)
 			continue ;
 		free(*storage);
 		free(*buffer);
@@ -96,17 +96,16 @@ char	*ft_strncat(char *dest, const char *src, size_t len)
 	return (dest);
 }
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memalloc(size_t size)
 {
-	unsigned char	*ptr;
-	size_t			i;
+	char	*ptr;
+	size_t	i;
 
-	ptr = (unsigned char *)s;
+	ptr = malloc(size);
+	if (!ptr)
+		return (NULL);
 	i = 0;
-	while (i < n)
-	{
-		ptr[i] = (unsigned char)c;
-		i++;
-	}
-	return (s);
+	while (i < size)
+		ptr[i++] = 0;
+	return (ptr);
 }
