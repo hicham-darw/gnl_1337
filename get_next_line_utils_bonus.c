@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/13 11:49:19 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:21:56 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ char	*ft_get_line(char **storage, char **buffer, int fd)
 			return (last_line_in_storage(storage, *buffer));
 		if (append_buffer_to_storage(storage, *buffer, bytes_read) == 1)
 			continue ;
-		else
-			return (NULL);
+		free(*storage);
+		free(*buffer);
+		return (NULL);
 	}
 	return (NULL);
 }
@@ -100,7 +101,7 @@ void	*ft_memalloc(size_t size)
 
 	ptr = (char *)malloc(size);
 	i = 0;
-	while (i < n)
+	while (i < size)
 		ptr[i++] = '\0';
 	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:51:03 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/13 11:54:09 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:30:14 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*last_line_in_storage(char **storage, char *buffer)
 		return (NULL);
 	}
 	free(*storage);
+	*storage = NULL;
 	return (line);
 }
 

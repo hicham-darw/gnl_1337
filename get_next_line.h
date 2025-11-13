@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:09:26 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/13 11:56:57 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:35:04 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2000
+#  define BUFFER_SIZE 20
 # endif
 
 # include <stdlib.h>
