@@ -6,7 +6,7 @@
 /*   By: hel-hamo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 18:54:45 by hel-hamo          #+#    #+#             */
-/*   Updated: 2025/11/13 15:21:56 by hel-hamo         ###   ########.fr       */
+/*   Updated: 2025/11/23 20:35:10 by hel-hamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	*ft_memalloc(size_t size)
 	size_t	i;
 
 	ptr = (char *)malloc(size);
+	if (!ptr)
+		return (NULL);
 	i = 0;
 	while (i < size)
 		ptr[i++] = '\0';
